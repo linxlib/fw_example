@@ -7,10 +7,15 @@ replace (
 	github.com/linxlib/fw => ../../repos/fw
 )
 
-require github.com/linxlib/fw v0.0.0-00010101000000-000000000000
+require (
+	github.com/linxlib/fw v0.0.0-00010101000000-000000000000
+	github.com/redis/go-redis/v9 v9.6.1
+)
 
 require (
 	github.com/andybalholm/brotli v1.1.0 // indirect
+	github.com/cespare/xxhash/v2 v2.2.0 // indirect
+	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/fasthttp/router v1.5.2 // indirect
 	github.com/fasthttp/websocket v1.5.10 // indirect
 	github.com/gookit/color v1.5.4 // indirect

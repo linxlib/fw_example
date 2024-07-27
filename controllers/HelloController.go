@@ -11,6 +11,7 @@ import (
 // HelloController 哈罗啊
 // @Controller
 // @Route /api
+// @Log
 type HelloController struct {
 }
 
@@ -43,6 +44,10 @@ type MyCookie struct {
 // @Plain
 type MyPlain string
 
+func TestPanic() {
+	panic("jhhhh")
+}
+
 // Get hhh
 // @Logger
 // @POST /v1/user/{name}
@@ -51,6 +56,9 @@ func (this *HelloController) Get(ctx *fw.Context, body1 *MyBody, path1 *MyPath, 
 	fmt.Println(*p)
 	fmt.Println(ctx.RemoteIP())
 	//ctx.GetFastContext().Response.SetStatusCode(500)
+	if p.C != 88 {
+		TestPanic()
+	}
 
 	ctx.JSON(200, map[string]interface{}{
 		"pathname": path1.Name,

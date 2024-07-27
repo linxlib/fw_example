@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cors Check</title>
+</head>
+<body>
+<span>loading...</span>
+
+<script>
+  async function getData() {
+    const url = "http://www.example2.com:2024/cors/corsCheck";
+    fetch(url, {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+
+      },
+    });
+  }
+  getData();
+</script>
+</body>
+</html>
