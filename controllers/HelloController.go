@@ -1,11 +1,13 @@
 package controllers
 
 import (
+	"bufio"
 	"errors"
 	"fmt"
 	"github.com/linxlib/fw"
 	"io"
 	"net/http"
+	"time"
 )
 
 // HelloController 哈罗啊
@@ -92,5 +94,46 @@ func (this *HelloController) GetIndex(ctx *fw.Context) {
 // GetImage
 // @GET /Maintenance.png
 func (this *HelloController) GetImage(ctx *fw.Context) {
-	ctx.GetFastContext().SendFile("E:\\repos\\htmldemo\\Maintenance.png")
+	ctx.File("E:\\repos\\htmldemo\\Maintenance.png")
+}
+
+// MyGenericType
+// @Body
+type MyGenericType[T My] struct {
+	Code    int    `json:"code"`
+	Message string `json:"message"`
+	Data    T      `json:"data"`
+}
+
+// TestTypeParam
+// @POST /testGenericType
+func (this *HelloController) TestTypeParam(ctx *fw.Context, body *MyGenericType[int]) {
+	ctx.PureJSON(200, body)
+}
+
+// TestStream
+// @GET /testStream
+func (this *HelloController) TestStream(ctx *fw.Context) {
+	ctx.Stream(func(w *bufio.Writer) {
+		w.WriteString("1")
+		time.Sleep(time.Second)
+		w.WriteString("2")
+		time.Sleep(time.Second)
+		w.WriteString("3")
+		time.Sleep(time.Second)
+		w.WriteString("4")
+		time.Sleep(time.Second)
+		w.WriteString("5")
+		time.Sleep(time.Second)
+		w.WriteString("end. nothing")
+
+	})
+}
+
+type My interface {
+	~int | ~string | byte
+}
+
+func Higher[T My](a, b T) bool {
+	return a > b
 }

@@ -28,3 +28,17 @@ func (c *RedisController) Read(ctx *fw.Context, client *redis.Client) {
 	ctx.String(200, "read from redis: %s", result)
 
 }
+
+//type AdminUser struct {
+//	ID        int64  `gorm:"primarykey,auto_increment;column:id" json:"id"`
+//	LoginName string `gorm:"column:login_name" json:"login_name"`
+//	Password  string `gorm:"column:password" json:"password"`
+//}
+//
+//// ReadDBTable
+//// @GET /readDBTable
+//func (c *RedisController) ReadDBTable(ctx *fw.Context, db *gorm.DB) {
+//	au := &AdminUser{}
+//	db.Where("login_name=?", "admin").Find(&au)
+//	ctx.PureJSON(200, au)
+//}

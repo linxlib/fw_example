@@ -4,12 +4,18 @@ import (
 	"github.com/linxlib/fw"
 	"github.com/linxlib/fw/middlewares"
 	"github.com/linxlib/fw_example/controllers"
+	middlewares2 "github.com/linxlib/fw_example/middlewares"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 	"time"
 )
+
+//go:generate go run github.com/linxlib/astp/astpg -o gen.json
 
 var _ controllers.HelloController
 
 func main() {
+	//os.Setenv("FW_DEV", "false")
 	s := fw.New()
 	s.Use(middlewares.NewServerDownMiddleware("111"))
 	s.Use(middlewares.NewWebsocketMiddleware())
@@ -18,7 +24,16 @@ func main() {
 	//s.Use(middlewares.NewResponseRewriteMiddleware())
 	s.Use(middlewares.NewRecoveryMiddleware())
 	s.Use(middlewares.NewBasicAuthMiddleware())
-	s.Use(middlewares.NewRedisMiddlewareWithUrl("redis://10.10.0.16:6379/1"))
+	// connect mysql
+	db, err := gorm.Open(mysql.Open("root:root@tcp(10.10.0.16:3306)/wanshengserver?charset=utf8mb4&parseTime=True&loc=Local"), &gorm.Config{})
+	if err != nil {
+		panic(err)
+	}
+	dbmid := middlewares2.NewMySQLMiddleware(db)
+
+	s.Use(dbmid)
+
+	s.Use(middlewares2.NewRedisMiddlewareWithUrl("redis://10.10.0.16:6379/1"))
 	s.Use(middlewares.NewCorsMiddleware(middlewares.Config{
 
 		AllowOrigins:     []string{"http://www.example.com:5500"},
@@ -33,5 +48,9 @@ func main() {
 	s.RegisterRoute(new(controllers.BasicAuthController))
 	s.RegisterRoute(new(controllers.RedisController))
 	s.RegisterRoute(new(controllers.CorsController))
+	db.AutoMigrate(new(controllers.AdminUser))
+
+	s.RegisterRoute(controllers.NewUserCrudController(db))
+	s.Map(dbmid.GetDB())
 	s.Run()
 }
