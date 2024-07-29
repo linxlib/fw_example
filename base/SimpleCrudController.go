@@ -23,7 +23,7 @@ type SimpleCrudController[T models.IBaseModel] struct {
 }
 
 // IDQuery2
-// @Query
+// @Path
 type IDQuery2 struct {
 	ID uint `path:"id"`
 }

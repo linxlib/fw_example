@@ -41,9 +41,9 @@ func (u *UserCrud2Controller) Test(ctx *fw.Context) {
 // AdminUser
 // @Body
 type AdminUser struct {
-	*models.BaseModel `gorm:"embedded"`
-	LoginName         string `json:"login_name"`
-	Password          string `json:"password"`
+	*models.BaseModel2 `gorm:"embedded"`
+	LoginName          string `json:"login_name"`
+	Password           string `json:"password"`
 }
 
 func NewUserCrud2Controller(db *gorm.DB) *UserCrud2Controller {
