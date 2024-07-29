@@ -33,9 +33,9 @@ type MyPath struct {
 // MyQuery
 // @Query
 type MyQuery struct {
-	A []string `query:"a"`
-	B string   `query:"b"`
-	C int      `query:"c"`
+	A string `query:"a"`
+	B string `query:"b"`
+	C int    `query:"c"`
 }
 
 // @Cookie
@@ -66,7 +66,7 @@ func (this *HelloController) Get(ctx *fw.Context, body1 *MyBody, path1 *MyPath, 
 		"pathname": path1.Name,
 		"body1":    body1,
 		"path":     path1,
-		"query":    path1,
+		"query":    p,
 		"cookie":   p1,
 		"ip":       ctx.RemoteIP(),
 	})

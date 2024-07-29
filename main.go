@@ -5,6 +5,7 @@ import (
 	"github.com/linxlib/fw/middlewares"
 	"github.com/linxlib/fw_example/controllers"
 	middlewares2 "github.com/linxlib/fw_example/middlewares"
+	"github.com/linxlib/fw_example/models"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"time"
@@ -48,9 +49,10 @@ func main() {
 	s.RegisterRoute(new(controllers.BasicAuthController))
 	s.RegisterRoute(new(controllers.RedisController))
 	s.RegisterRoute(new(controllers.CorsController))
-	db.AutoMigrate(new(controllers.AdminUser))
+	db.AutoMigrate(new(models.AdminUser))
 
 	s.RegisterRoute(controllers.NewUserCrudController(db))
+	s.RegisterRoute(controllers.NewUserCrud2Controller(db))
 	s.Map(dbmid.GetDB())
 	s.Run()
 }
