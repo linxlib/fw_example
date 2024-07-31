@@ -6,7 +6,7 @@ import (
 )
 
 type MySQLMiddleware struct {
-	fw.MiddlewareGlobal
+	*fw.MiddlewareGlobal
 	db *gorm.DB
 }
 

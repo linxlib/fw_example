@@ -7,29 +7,12 @@ import (
 	"gorm.io/gorm"
 )
 
-// UserCrudController
-// @Route /user
-type UserCrudController struct {
-	*base.CrudController[models.AdminUser]
-}
-
-// Test
-// @GET /test
-func (u *UserCrudController) Test(ctx *fw.Context) {
-	ctx.String(200, "test")
-}
-
-func NewUserCrudController(db *gorm.DB) *UserCrudController {
-	a := &UserCrudController{
-		CrudController: base.NewCrudController[models.AdminUser](db),
-	}
-	return a
-}
-
 // UserCrud2Controller
 // @Route /user2
+// @Controller
+// @Log
 type UserCrud2Controller struct {
-	*base.SimpleCrudController[AdminUser]
+	*base.SimpleCrudController[int, AdminUser]
 }
 
 // Test
@@ -41,14 +24,14 @@ func (u *UserCrud2Controller) Test(ctx *fw.Context) {
 // AdminUser
 // @Body
 type AdminUser struct {
-	*models.BaseModel2 `gorm:"embedded"`
-	LoginName          string `json:"login_name"`
-	Password           string `json:"password"`
+	*models.Base[int] `gorm:"embedded"`
+	LoginName         string `json:"login_name"`
+	Password          string `json:"password"`
 }
 
 func NewUserCrud2Controller(db *gorm.DB) *UserCrud2Controller {
 	a := &UserCrud2Controller{
-		SimpleCrudController: base.NewSimpleCrudController[AdminUser](db),
+		SimpleCrudController: base.NewSimpleCrudController[int, AdminUser](db),
 	}
 	return a
 }

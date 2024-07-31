@@ -7,7 +7,7 @@ import (
 
 // RedisMiddleware used for injecting Redis service into method (with *RedisService param)
 type RedisMiddleware struct {
-	fw.MiddlewareGlobal
+	*fw.MiddlewareGlobal
 	option *redis.Options
 	client *redis.Client
 }

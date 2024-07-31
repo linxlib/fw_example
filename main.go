@@ -6,6 +6,7 @@ import (
 	"github.com/linxlib/fw_example/controllers"
 	middlewares2 "github.com/linxlib/fw_example/middlewares"
 	"github.com/linxlib/fw_example/models"
+	"github.com/sirupsen/logrus"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"time"
@@ -21,9 +22,15 @@ func main() {
 	s.Use(middlewares.NewServerDownMiddleware("111"))
 	s.Use(middlewares.NewWebsocketMiddleware())
 	s.Use(middlewares.NewWebsocketHubMiddleware())
-	s.Use(middlewares.NewLogMiddleware(fw.Logger{}))
+	var logger = logrus.New()
+	s.Provide(logger)
+	s.Use(middlewares.NewLoggerMiddleware(logger))
 	//s.Use(middlewares.NewResponseRewriteMiddleware())
-	s.Use(middlewares.NewRecoveryMiddleware())
+	s.Use(middlewares.NewRecoveryMiddleware(&middlewares.RecoveryOptions{
+		NiceWeb: true,
+		Console: true,
+		Output:  logger.WriterLevel(logrus.ErrorLevel),
+	}))
 	s.Use(middlewares.NewBasicAuthMiddleware())
 	// connect mysql
 	db, err := gorm.Open(mysql.Open("root:root@tcp(10.10.0.16:3306)/wanshengserver?charset=utf8mb4&parseTime=True&loc=Local"), &gorm.Config{})
@@ -51,7 +58,6 @@ func main() {
 	s.RegisterRoute(new(controllers.CorsController))
 	db.AutoMigrate(new(models.AdminUser))
 
-	s.RegisterRoute(controllers.NewUserCrudController(db))
 	s.RegisterRoute(controllers.NewUserCrud2Controller(db))
 	s.Map(dbmid.GetDB())
 	s.Run()

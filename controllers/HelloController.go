@@ -54,9 +54,9 @@ func TestPanic() {
 // @Logger
 // @POST /v1/user/{name}
 func (this *HelloController) Get(ctx *fw.Context, body1 *MyBody, path1 *MyPath, p *MyQuery, p1 *MyCookie) {
-	fmt.Println("pathname", path1.Name)
-	fmt.Println(*p)
-	fmt.Println(ctx.RemoteIP())
+	//fmt.Println("pathname", path1.Name)
+	//fmt.Println(*p)
+	//fmt.Println(ctx.RemoteIP())
 	//ctx.GetFastContext().Response.SetStatusCode(500)
 	if p.C != 88 {
 		TestPanic()
