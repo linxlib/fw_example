@@ -29,7 +29,7 @@ func (r *RedisMiddleware) CloneAsCtl() fw.IMiddlewareCtl {
 	return NewRedisMiddleware(r.option)
 }
 
-func (r *RedisMiddleware) HandlerController(string) *fw.RouteItem {
+func (r *RedisMiddleware) HandlerController(string) []*fw.RouteItem {
 	return fw.EmptyRouteItem(r)
 }
 

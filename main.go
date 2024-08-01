@@ -29,8 +29,7 @@ func main() {
 	s.Use(middlewares.NewRecoveryMiddleware(&middlewares.RecoveryOptions{
 		NiceWeb: true,
 		Console: true,
-		Output:  logger.WriterLevel(logrus.ErrorLevel),
-	}))
+	}, nil))
 	s.Use(middlewares.NewBasicAuthMiddleware())
 	// connect mysql
 	db, err := gorm.Open(mysql.Open("root:root@tcp(10.10.0.16:3306)/wanshengserver?charset=utf8mb4&parseTime=True&loc=Local"), &gorm.Config{})

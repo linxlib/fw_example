@@ -24,7 +24,11 @@ require (
 	github.com/fasthttp/router v1.5.2 // indirect
 	github.com/fasthttp/websocket v1.5.10 // indirect
 	github.com/go-sql-driver/mysql v1.7.0 // indirect
+	github.com/google/uuid v1.6.0 // indirect
 	github.com/gookit/color v1.5.4 // indirect
+	github.com/gookit/filter v1.2.1 // indirect
+	github.com/gookit/goutil v0.6.15 // indirect
+	github.com/gookit/validate v1.5.2 // indirect
 	github.com/jinzhu/configor v1.2.2 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect

@@ -37,6 +37,6 @@ func (m *MySQLMiddleware) CloneAsCtl() fw.IMiddlewareCtl {
 	return NewMySQLMiddleware(m.db)
 }
 
-func (m *MySQLMiddleware) HandlerController(string) *fw.RouteItem {
+func (m *MySQLMiddleware) HandlerController(string) []*fw.RouteItem {
 	return fw.EmptyRouteItem(m)
 }
